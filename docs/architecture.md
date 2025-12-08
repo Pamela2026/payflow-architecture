@@ -149,15 +149,15 @@ The Frontend communicates only with the API Gateway. All services are decoupled 
 
 ### **Sequence Diagram (Mermaid)**
 
+```mermaid
 sequenceDiagram
-
-participant F as Frontend
-participant G as API Gateway
-participant A as Auth Service
-participant T as Transaction Service
-participant W as Wallet Service
-participant R as RabbitMQ
-participant N as Notification Service
+    participant F as Frontend
+    participant G as API Gateway
+    participant A as Auth Service
+    participant T as Transaction Service
+    participant W as Wallet Service
+    participant R as RabbitMQ
+    participant N as Notification Service
 
     F->>G: POST /api/transactions
     G->>A: Verify JWT
