@@ -151,6 +151,7 @@ The Frontend communicates only with the API Gateway. All services are decoupled 
 
 ```mermaid
 sequenceDiagram
+...mermaid code...
     participant F as Frontend
     participant G as API Gateway
     participant A as Auth Service
@@ -172,6 +173,7 @@ sequenceDiagram
     N->>Email/SMS: Send Notifications
     T-->>G: Return Success
     G-->>F: Response (Transaction Completed)
+
 
 
 
