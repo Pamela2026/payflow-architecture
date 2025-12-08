@@ -176,21 +176,24 @@ participant N as Notification Service
 
 
 5. Databases, Cache, and Queue
-| Component  | Purpose                                  |
-| ---------- | ---------------------------------------- |
-| PostgreSQL | Users, wallets, transactions, audit logs |
-| Redis      | Token blacklist, idempotency, caching    |
-| RabbitMQ   | Async messaging for notifications        |
+
+| Component   | Purpose                                    |
+|------------|--------------------------------------------|
+| PostgreSQL  | Users, wallets, transactions, audit logs  |
+| Redis       | Token blacklist, idempotency, caching     |
+| RabbitMQ    | Async messaging for notifications         |
+
 
 
 6. Environment Variables Summary
-| Service              | Key Env Vars                                                                                                   |
-| -------------------- | -------------------------------------------------------------------------------------------------------------- |
-| API Gateway          | AUTH_SERVICE_URL, WALLET_SERVICE_URL, TRANSACTION_SERVICE_URL, NOTIFICATION_SERVICE_URL, CORS_ORIGIN, PORT     |
-| Auth Service         | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET, REDIS_URL                                         |
-| Wallet Service       | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, REDIS_URL                                                     |
-| Transaction Service  | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, WALLET_SERVICE_URL, AUTH_SERVICE_URL, RABBITMQ_URL, REDIS_URL |
-| Notification Service | RABBITMQ_URL, EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD, TWILIO_SID, TWILIO_TOKEN                                 |
+
+| Service             | Key Env Vars                                                                                      |
+|--------------------|--------------------------------------------------------------------------------------------------|
+| API Gateway         | AUTH_SERVICE_URL, WALLET_SERVICE_URL, TRANSACTION_SERVICE_URL, NOTIFICATION_SERVICE_URL, CORS_ORIGIN, PORT |
+| Auth Service        | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET, REDIS_URL                            |
+| Wallet Service      | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, REDIS_URL                                        |
+| Transaction Service | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, WALLET_SERVICE_URL, AUTH_SERVICE_URL, RABBITMQ_URL, REDIS_URL |
+| Notification Service| RABBITMQ_URL, EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD, TWILIO_SID, TWILIO_TOKEN                  |
 
 
 7. Notes
