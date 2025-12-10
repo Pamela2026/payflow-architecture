@@ -176,7 +176,7 @@ sequenceDiagram
 
 
 
-5. **Databases, Cache, and Queue.**
+## 5. **Databases, Cache, and Queue.**
 
 | Component   | Purpose                                    |
 |------------|--------------------------------------------|
@@ -184,8 +184,9 @@ sequenceDiagram
 | Redis       | Token blacklist, idempotency, caching     |
 | RabbitMQ    | Async messaging for notifications         |
 
+---
 
-6. **Environment Variables Summary.**
+## 6. **Environment Variables Summary.**
 
 | Service             | Key Env Vars                                                                                      |
 |--------------------|--------------------------------------------------------------------------------------------------|
@@ -195,8 +196,9 @@ sequenceDiagram
 | Transaction Service | DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, WALLET_SERVICE_URL, AUTH_SERVICE_URL, RABBITMQ_URL, REDIS_URL |
 | Notification Service| RABBITMQ_URL, EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD, TWILIO_SID, TWILIO_TOKEN                  |
 
+---
 
-7. **Summary Table — Who Talks to Who.**
+## 7. **Summary Table — Who Talks to Who.**
 
 | Service                  | Talks To                                | Reason                                |
 | ------------------------ | --------------------------------------- | ------------------------------------- |
@@ -209,8 +211,9 @@ sequenceDiagram
 | **Auth Service**         | None                                    | Only responds to requests             |
 | **RabbitMQ**             | Notification Service                    | Event-driven async notifications      |
 
+---
 
-8. **Notes.**
+## 8. **Notes.**
 
 API Gateway is the single entry point for all frontend requests.
 
