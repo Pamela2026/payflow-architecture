@@ -1,6 +1,6 @@
 # PayFlow Microservices Architecture Documentation
 
-**Repository:** PayFlow — Production-ready fintech microservices platform  
+**Repository:** [PayFlow](https://github.com/Ship-With-Zee/payflow-wallet.git) — Production-ready fintech microservices platform  
 **Purpose:** Understand app architecture, service responsibilities, communication flows, and request traces.
 
 This repository provides a comprehensive breakdown of the PayFlow system, including:
