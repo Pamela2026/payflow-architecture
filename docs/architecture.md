@@ -16,19 +16,17 @@ This repository provides a comprehensive breakdown of the PayFlow system, includ
 
 ## 1. Architecture Overview
 
-Frontend
+📱 Frontend (React)
 │
-|
-API Gateway (Port: 3000)
-│
-├── Auth Service (Port: 3004)
-│
-├── Wallet Service (Port: 3001)
-│
-├── Transaction Service (Port: 3002)
-│  └── RabbitMQ -> Notification Service (Port: 3003)
-│
-└── Notification Service (Port: 3003)
+└── 🌐 API Gateway — Port 3000
+      │
+      ├── 🔐 Auth Service — Port 3004
+      ├── 💰 Wallet Service — Port 3001
+      ├── 🔄 Transaction Service — Port 3002
+      │
+      ├── 📨 RabbitMQ → Notification Queue
+      └── 🔔 Notification Service — Port 3003
+
 
 DB: PostgreSQL (users, wallets, transactions)
 Cache: Redis (token blacklisting, idempotency)
@@ -147,10 +145,11 @@ The Frontend communicates only with the API Gateway. All services are decoupled 
 
 ---
 
-### **Sequence Diagram (Mermaid)**
+```markdown
+### Sequence Diagram (Mermaid)
 
+```mermaid
 sequenceDiagram
-...mermaid code...
     participant F as Frontend
     participant G as API Gateway
     participant A as Auth Service
@@ -161,18 +160,18 @@ sequenceDiagram
 
     F->>G: POST /api/transactions
     G->>A: Verify JWT
-    G->>T: Forward Send Money request
-    T->>W: Debit Sender
-    W-->>T: Confirm Debit
-    T->>W: Credit Receiver
-    W-->>T: Confirm Credit
-    T->>T: Record Transaction
-    T->>R: Publish Event
-    R->>N: Consume Event
+    G->>T: Forward Send Money Request
+    T->>W: Debit Sender Wallet
+    W-->>T: Debit Confirmed
+    T->>W: Credit Receiver Wallet
+    W-->>T: Credit Confirmed
+    T->>T: Record Transaction in DB
+    T->>R: Publish Notification Event
+    R->>N: Deliver Event to Notification Service
     N->>Email/SMS: Send Notifications
-    T-->>G: Return Success
-    G-->>F: Response (Transaction Completed)
-
+    T-->>G: Success Response
+    G-->>F: Transaction Completed
+    
 ---
 
 ## 5. **Databases, Cache, and Queue.**
