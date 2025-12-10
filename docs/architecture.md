@@ -149,7 +149,6 @@ The Frontend communicates only with the API Gateway. All services are decoupled 
 
 ### **Sequence Diagram (Mermaid)**
 
-```mermaid
 sequenceDiagram
 ...mermaid code...
     participant F as Frontend
@@ -177,7 +176,7 @@ sequenceDiagram
 
 
 
-5. Databases, Cache, and Queue
+5. **Databases, Cache, and Queue.**
 
 | Component   | Purpose                                    |
 |------------|--------------------------------------------|
@@ -186,8 +185,7 @@ sequenceDiagram
 | RabbitMQ    | Async messaging for notifications         |
 
 
-
-6. Environment Variables Summary
+6. **Environment Variables Summary.**
 
 | Service             | Key Env Vars                                                                                      |
 |--------------------|--------------------------------------------------------------------------------------------------|
@@ -198,7 +196,21 @@ sequenceDiagram
 | Notification Service| RABBITMQ_URL, EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD, TWILIO_SID, TWILIO_TOKEN                  |
 
 
-7. Notes
+7. **Summary Table — Who Talks to Who.**
+
+| Service                  | Talks To                                | Reason                                |
+| ------------------------ | --------------------------------------- | ------------------------------------- |
+| **API Gateway**          | Auth, Wallet, Transaction, Notification | Single entry point for all requests   |
+| **Transaction Service**  | Wallet Service                          | Debit & Credit operations             |
+| **Transaction Service**  | Auth Service                            | Validate user token (optional)        |
+| **Transaction Service**  | RabbitMQ                                | Publish transaction events            |
+| **Notification Service** | RabbitMQ                                | Consume events and send notifications |
+| **Wallet Service**       | None                                    | Only responds to requests             |
+| **Auth Service**         | None                                    | Only responds to requests             |
+| **RabbitMQ**             | Notification Service                    | Event-driven async notifications      |
+
+
+8. **Notes.**
 
 API Gateway is the single entry point for all frontend requests.
 
