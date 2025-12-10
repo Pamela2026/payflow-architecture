@@ -173,8 +173,7 @@ sequenceDiagram
     T-->>G: Return Success
     G-->>F: Response (Transaction Completed)
 
-
-
+---
 
 ## 5. **Databases, Cache, and Queue.**
 
