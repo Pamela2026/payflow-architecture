@@ -16,21 +16,33 @@ This repository provides a comprehensive breakdown of the PayFlow system, includ
 
 ## 1. Architecture Overview
 
+```
 📱 Frontend (React)
-│
-└── 🌐 API Gateway — Port 3000
-      │
-      ├── 🔐 Auth Service — Port 3004
-      ├── 💰 Wallet Service — Port 3001
-      ├── 🔄 Transaction Service — Port 3002
-      │
-      ├── 📨 RabbitMQ → Notification Queue
-      └── 🔔 Notification Service — Port 3003
+        │
+        ▼
+🌐 API Gateway (Port 3000)
+        │
+        ├─── HTTP ───► 🔐 Auth Service (Port 3004)
+        │                    │
+        ├─── HTTP ───► 🔄 Transaction Service (Port 3002)
+        │                    │
+        ├─── HTTP ───► 💰 Wallet Service (Port 3001)
+        │                    │
+        └─── HTTP ───► 🔔 Notification Service (Port 3003)
+                             │
+                             │
+        ┌────────────────────┼────────────────────┐
+        │                    │                    │
+        ▼                    ▼                    ▼
+🗄️ PostgreSQL          🔴 Redis            📨 RabbitMQ
+(users, wallets,    (tokens, cache,      (notification
+ transactions)        idempotency)          events)
+        ▲                    ▲                    │
+        │                    │                    │
+        └────────────────────┴────────────────────┘
+                    (All services connect)
+```
 
-
-DB: PostgreSQL (users, wallets, transactions)
-Cache: Redis (token blacklisting, idempotency)
-Queue: RabbitMQ (transaction events)
 
 
 > **Note:** API Gateway is the single entry point for frontend requests.
@@ -145,7 +157,6 @@ The Frontend communicates only with the API Gateway. All services are decoupled 
 
 ---
 
-```markdown
 ### Sequence Diagram (Mermaid)
 
 ```mermaid
@@ -160,18 +171,23 @@ sequenceDiagram
 
     F->>G: POST /api/transactions
     G->>A: Verify JWT
+    A-->>G: JWT Valid
+    G->>G: Validate Request & Rate Limit
     G->>T: Forward Send Money Request
+    T->>T: Validate Sender/Receiver
+    T->>T: Check Idempotency
     T->>W: Debit Sender Wallet
     W-->>T: Debit Confirmed
     T->>W: Credit Receiver Wallet
     W-->>T: Credit Confirmed
     T->>T: Record Transaction in DB
-    T->>R: Publish Notification Event
-    R->>N: Deliver Event to Notification Service
-    N->>Email/SMS: Send Notifications
+    T->>R: Publish transaction.completed Event
+    R->>N: Deliver Event
+    N->>N: Send Email/SMS Notification
     T-->>G: Success Response
     G-->>F: Transaction Completed
-    
+```
+
 ---
 
 ## 5. **Databases, Cache, and Queue.**
